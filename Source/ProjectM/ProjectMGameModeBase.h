@@ -22,7 +22,7 @@ public:
 	~AProjectMGameModeBase();
 	
 private:
-	TUniquePtr<MazeGenerator> _mazeGenerator;
+	TUniquePtr<class MazeGenerator> _mazeGenerator;
 
 protected:
 	void BeginPlay() override;
