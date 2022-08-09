@@ -28,9 +28,6 @@ public:
 	void build(std::map<Position, MazeNode*> maze);
 
 private:
-	UPROPERTY(EditInstanceOnly, Category=MapPos)
-	AActor* _mapStartPosition;
-
 	TMap<uint8, class UBlueprint*> _mazeMeshes;
 	TMap<uint8, FString> _mazeMeshNames;
 };

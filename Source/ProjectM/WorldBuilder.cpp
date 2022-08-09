@@ -4,8 +4,8 @@
 #include "WorldBuilder.h"
 
 #include "Global.h"
-#include <Engine/StaticMesh.h>
 #include "MazeGenerator.h"
+#include <Engine/StaticMesh.h>
 #include <Engine/StaticMeshActor.h>
 #include <Engine/Blueprint.h>
 
@@ -85,8 +85,6 @@ void AWorldBuilder::build(std::map<Position, MazeNode*> mazes)
         MazeNode* mazeNode = maze.second;
         FTransform transform;
         transform.SetLocation(transform.GetLocation() + FVector(-300 * pos.Col, 300 * pos.Row, 0));
-
-        Logger::Log(mazeNode->GetWall());
         GetWorld()->SpawnActor<AActor>(_mazeMeshes[mazeNode->GetWall()]->GeneratedClass, transform);
     }
 }

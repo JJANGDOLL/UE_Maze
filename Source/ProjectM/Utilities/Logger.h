@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 
-#define PrintInfo() { Logger::Log(__FUNCTION__, __LINE__); }
+#define PrintLine() { Logger::Log(__FUNCTION__, __LINE__); }
 #define PrintBegin() { Logger::Log(__FUNCTION__ + " Begin") }
 #define PrintEnd() { Logger::Log(__FUNCTION__ + " End") }
 

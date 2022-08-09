@@ -16,7 +16,7 @@ public:
 
     void init(uint8 InMapSize, UWorld* InWorld)
     {
-        PrintInfo();
+        PrintLine();
 
         _mapSize = InMapSize + 2;
         _world = InWorld;
@@ -43,7 +43,7 @@ public:
         std::random_device rd;
         auto rng = std::default_random_engine{ rd() };
 
-        PrintInfo();
+        PrintLine();
 
 
         while (!_dfs.empty())

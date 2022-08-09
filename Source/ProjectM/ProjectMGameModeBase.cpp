@@ -5,10 +5,13 @@
 
 #include "Global.h"
 #include "WorldBuilder.h"
+#include "MainCharcater.h"
 
 AProjectMGameModeBase::AProjectMGameModeBase()
 {
     _mazeGenerator = MakeUnique<MazeGenerator>();
+
+    DefaultPawnClass = AMainCharcater::StaticClass();
 }
 
 AProjectMGameModeBase::~AProjectMGameModeBase()
@@ -22,8 +25,8 @@ void AProjectMGameModeBase::BeginPlay()
 
 
     // -----------------------------------------
-    _mazeGenerator->init(50, GetWorld());
+    _mazeGenerator->init(15, GetWorld());
     _mazeGenerator->generate();
     _mazeGenerator->build();
-    PrintInfo();
+    PrintLine();
 }
