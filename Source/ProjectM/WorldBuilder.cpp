@@ -81,11 +81,16 @@ void AWorldBuilder::build(std::map<Position, MazeNode*> mazes)
 {
     for (const auto& maze : mazes)
     {
+        FTransform transform;
         Position pos = maze.first;
         MazeNode* mazeNode = maze.second;
-        FTransform transform;
-        transform.SetLocation(transform.GetLocation() + FVector(-300 * pos.Col, 300 * pos.Row, 0));
-        GetWorld()->SpawnActor<AActor>(_mazeMeshes[mazeNode->GetWall()]->GeneratedClass, transform);
+        transform.SetLocation(transform.GetLocation() + FVector(-599 * pos.Col, 599 * pos.Row, 0));
+        transform.SetScale3D(FVector(2.0f, 2.0f, 2.0f));
+        //GetWorld()->SpawnActor<AActor>(_mazeMeshes[mazeNode->GetWall()]->GeneratedClass, transform);
+        AActor* defferedActor = GetWorld()->SpawnActorDeferred<AActor>(_mazeMeshes[mazeNode->GetWall()]->GeneratedClass, transform);
+
+        UGameplayStatics::FinishSpawningActor(defferedActor, transform);
+        defferedActor->GetRootComponent()->SetMobility(EComponentMobility::Static);
     }
 }
 

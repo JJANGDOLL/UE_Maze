@@ -2,9 +2,9 @@
 
 
 #include "MazeGenerator.h"
-#include "Global.h"
 #include <random>
 #include <Engine/World.h>
+#include "Global.h"
 #include "WorldBuilder.h"
 
 
@@ -14,12 +14,11 @@ public:
 
     ~MazeImpl() = default;
 
-    void init(uint8 InMapSize, UWorld* InWorld)
+    void init(uint8 InMapSize)
     {
         PrintLine();
 
         _mapSize = InMapSize + 2;
-        _world = InWorld;
 
         _dfs.push_back({ 1, 1 });
 
@@ -82,23 +81,27 @@ public:
 
     void build()
     {
-        AWorldBuilder* worldBuilder = _world->SpawnActor<AWorldBuilder>(AWorldBuilder::StaticClass());
-        worldBuilder->build(_mapNode);
+//         AWorldBuilder* worldBuilder = _world->SpawnActor<AWorldBuilder>(AWorldBuilder::StaticClass());
+//         worldBuilder->build(_mapNode);
+    }
+
+    std::map<Position, MazeNode*> getMaze()
+    {
+        return _mapNode;
     }
 
 private:
     uint8 _mapSize;
     std::vector<Position> _dfs;
     std::map<Position, MazeNode*> _mapNode;
-    UWorld* _world;
 };
 
 MazeGenerator::MazeGenerator() : pimpl_(new MazeImpl{}) {};
 MazeGenerator::~MazeGenerator() = default;
 
-void MazeGenerator::init(uint8 InMapSize, UWorld* InWorld)
+void MazeGenerator::init(uint8 InMapSize)
 {
-    pimpl_->init(InMapSize, InWorld);
+    pimpl_->init(InMapSize);
 }
 
 void MazeGenerator::generate()
@@ -109,4 +112,9 @@ void MazeGenerator::generate()
 void MazeGenerator::build()
 {
     pimpl_->build();
+}
+
+std::map<Position, MazeNode*> MazeGenerator::getMaze()
+{
+    return pimpl_->getMaze();
 }

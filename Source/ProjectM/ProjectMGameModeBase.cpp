@@ -9,7 +9,7 @@
 
 AProjectMGameModeBase::AProjectMGameModeBase()
 {
-    _mazeGenerator = MakeUnique<MazeGenerator>();
+//     _mazeGenerator = MakeUnique<MazeGenerator>();
 
     DefaultPawnClass = AMainCharcater::StaticClass();
 }
@@ -23,10 +23,12 @@ void AProjectMGameModeBase::BeginPlay()
 {
     Super::BeginPlay();
 
-
-    // -----------------------------------------
-    _mazeGenerator->init(15, GetWorld());
-    _mazeGenerator->generate();
-    _mazeGenerator->build();
-    PrintLine();
+//     generateMap();
 }
+
+// void AProjectMGameModeBase::generateMap()
+// {
+//     _mazeGenerator->init(25, GetWorld());
+//     _mazeGenerator->generate();
+//     _mazeGenerator->build();
+// }

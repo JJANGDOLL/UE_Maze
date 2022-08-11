@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "MazeGenerator.h"
 #include "ProjectMGameModeBase.generated.h"
 
 /**
@@ -22,7 +21,7 @@ public:
 	~AProjectMGameModeBase();
 	
 private:
-	TUniquePtr<class MazeGenerator> _mazeGenerator;
+// 	TUniquePtr<class MazeGenerator> _mazeGenerator;
 
 protected:
 	void BeginPlay() override;

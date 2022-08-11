@@ -5,26 +5,7 @@
 #include "CoreMinimal.h"
 #include <vector>
 #include <map>
-
-struct Position
-{
-    uint8 Col;
-    uint8 Row;
-
-    Position(uint8 InCol, uint8 InRow)
-    {
-        Col = InCol;
-        Row = InRow;
-    }
-
-    bool operator==(const Position& rhs) const {
-        return Col == rhs.Col && Row == rhs.Row;
-    }
-
-    bool operator<(const Position& rhs) const {
-        return Col < rhs.Col || (Col == rhs.Col && Row < rhs.Row);
-    }
-};
+#include "Datas/Structures.h"
 
 enum Direction : uint8
 {
@@ -127,9 +108,10 @@ public:
 	MazeGenerator();
 	~MazeGenerator();
 
-	void init(uint8 InMapSize, class UWorld* InWorld);
+	void init(uint8 InMapSize);
 	void generate();
 	void build();
+    std::map<Position, MazeNode*> getMaze();
 
 private:
 	class MazeImpl;

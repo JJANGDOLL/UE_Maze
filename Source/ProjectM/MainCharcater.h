@@ -7,6 +7,7 @@
 #include "MainCharcater.generated.h"
 
 class UCameraComponent;
+class USpotLightComponent;
 
 UCLASS()
 class PROJECTM_API AMainCharcater : public ACharacter
@@ -18,7 +19,10 @@ public:
 	AMainCharcater();
 
     UPROPERTY(VisibleAnywhere, Category = Camera, meta = (AllowPrivateAccess = "true"))
-    UCameraComponent* FirstPersonCameraComponent;
+    UCameraComponent* _mainCamera;
+
+    UPROPERTY(VisibleAnywhere, Category = Items, meta= (AllowPrivateAccess = "true"))
+    USpotLightComponent* _flashLight;
 
 protected:
 	// Called when the game starts or when spawned
@@ -37,6 +41,8 @@ private:
 
 
 private:
-    FVector MovementInput;
-    FVector CameraInput;
+    FVector _movementInput;
+    FVector _cameraInput;
+
+	float _flashlightIntensity;
 };
