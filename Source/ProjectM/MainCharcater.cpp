@@ -8,6 +8,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SpotLightComponent.h"
+#include <Components/SceneComponent.h>
+#include <Components/ChildActorComponent.h>
 
 // Sets default values
 AMainCharcater::AMainCharcater()
@@ -22,13 +24,9 @@ AMainCharcater::AMainCharcater()
     _mainCamera->SetRelativeLocation(FVector(0, 0, 64.f)); // Position the camera
     _mainCamera->bUsePawnControlRotation = true;
 
-    _flashLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("FlashLight"));
+    _flashLight = CreateDefaultSubobject<UChildActorComponent>(TEXT("FlashLight"));
     _flashLight->SetupAttachment(_mainCamera);
-    _flashLight->SetRelativeLocation(FVector(0, 0, -40.f));
-    _flashLight->Intensity = 10000.0f;
-    _flashLight->InnerConeAngle = 15.0f;
-    _flashLight->OuterConeAngle = 22.0f;
-    _flashLight->AttenuationRadius = 3500.f;
+
 }
 
 // Called when the game starts or when spawned

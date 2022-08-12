@@ -18,11 +18,12 @@ public:
 	// Sets default values for this character's properties
 	AMainCharcater();
 
+private:
     UPROPERTY(VisibleAnywhere, Category = Camera, meta = (AllowPrivateAccess = "true"))
     UCameraComponent* _mainCamera;
 
-    UPROPERTY(VisibleAnywhere, Category = Items, meta= (AllowPrivateAccess = "true"))
-    USpotLightComponent* _flashLight;
+    UPROPERTY(VisibleAnywhere, Category = Camera, meta = (AllowPrivateAccess = "true"))
+    class UChildActorComponent* _flashLight;
 
 protected:
 	// Called when the game starts or when spawned

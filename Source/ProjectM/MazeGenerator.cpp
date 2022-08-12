@@ -24,8 +24,6 @@ public:
 
         _startPos = Position(0, 0);
         _endPos = Position(0, 0);
-
-
     }
 
     void generate()

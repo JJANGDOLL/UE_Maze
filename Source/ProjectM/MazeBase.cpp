@@ -68,6 +68,11 @@ void AMazeBase::PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEve
 
 void AMazeBase::makeMap()
 {
+    for (auto& comp : GetComponentsByClass(UChildActorComponent::StaticClass()))
+    {
+        comp->DestroyComponent();
+    }
+
     _mazeGenerator->init(_mazeSize);
     _mazeGenerator->generate();
     _mazeBuilder->build(_mazeGenerator.Get(), this);
