@@ -50,51 +50,45 @@ MazeBuilder::~MazeBuilder()
 
 void MazeBuilder::build(MazeGenerator* const generatedMaze, AActor* const parent)
 {
-
-    uint8 idx = 0;
-    for (const auto& mazeCell : generatedMaze->getMaze())
+    for (const auto& cellComp : _mazeChildComponents)
     {
-        FString label = "Maze_";
-        label += FString::FromInt(idx++);
-     
+        cellComp->DestroyChildActor();
+        cellComp->UnregisterComponent();
+        cellComp->DestroyComponent();
+    }
+
+    _mazeChildComponents.Reset();
+
+    Position goalPos = generatedMaze->getGoalPos();
+
+    for (const auto& mazeCell : generatedMaze->getMaze())
+    {     
         Position pos = mazeCell.first;
+        
         MazeNode* mazeNode = mazeCell.second;
 
-        UChildActorComponent* mazeComp = NewObject<UChildActorComponent>(parent, UChildActorComponent::StaticClass(), FName(*label));
+        UChildActorComponent* mazeComp = NewObject<UChildActorComponent>(parent, UChildActorComponent::StaticClass());
+        _mazeChildComponents.Emplace(mazeComp);
         mazeComp->SetChildActorClass(_mazeMeshes[mazeNode->GetWall()]);
         mazeComp->CreateChildActor();
 
         FVector loc = FVector(-599 * pos.Col, 599 * pos.Row, 0);
+        if (pos == goalPos)
+        {
+            _goalLoc = loc;
+        }
+
         FVector scale = FVector(2.0f, 2.0f, 2.0f);
 
         mazeComp->SetupAttachment(parent->GetRootComponent());
         mazeComp->SetRelativeLocation(loc);
         mazeComp->SetRelativeScale3D(scale);
         mazeComp->RegisterComponent();
-
-//        parent->AddInstanceComponent(mazeComp);
-
-        Logger::Log(parent->GetWorld());    
-        Logger::Log(mazeComp->GetOwner());
-        Logger::Log(mazeComp);
-        PrintLine();
-
-        //FTransform transform;
-        //Position pos = maze.first;
-        //MazeNode* mazeNode = maze.second;
-        //transform.SetLocation(transform.GetLocation() + FVector(-599 * pos.Col, 599 * pos.Row, 0));
-        //transform.SetScale3D(FVector(2.0f, 2.0f, 2.0f));
-        ////GetWorld()->SpawnActor<AActor>(_mazeMeshes[mazeNode->GetWall()]->GeneratedClass, transform);
-        //AActor* defferedActor = GetWorld()->SpawnActorDeferred<AActor>(_mazeMeshes[mazeNode->GetWall()]->GeneratedClass, transform);
-
-        //UGameplayStatics::FinishSpawningActor(defferedActor, transform);
-        //defferedActor->GetRootComponent()->SetMobility(EComponentMobility::Static);
     }
+}
 
-//     USceneComponent* root = CreateDefaultSubobject<USceneComponent>(TEXT("DefaultSceneRoot"));
-//     root->SetupAttachment(GetRootComponent());
-
-//     UChildActorComponent* child = CreateDefaultSubobject<UChildActorComponent>(TEXT("TEST"));
-//     child->SetupAttachment(root);
-//     child->SetChildActorClass(mazeMesh);
+FVector MazeBuilder::getGoalLoc()
+{
+    Logger::Log(_goalLoc);
+    return _goalLoc;
 }

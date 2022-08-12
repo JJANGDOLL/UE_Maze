@@ -7,6 +7,8 @@ struct Position
     uint8 Col;
     uint8 Row;
 
+    Position() {};
+
     Position(uint8 InCol, uint8 InRow)
     {
         Col = InCol;

@@ -18,21 +18,34 @@ public:
 	AMazeBase();
 
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=MazeProp, meta=(AllowPrivateAccess = "true", ClampMin = "4", ClampMax="10"))
+	UPROPERTY(VisibleInstanceOnly, Category = "MazeProp")
+    bool bPlaying;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="MazeProp", meta = (AllowPrivateAccess = "true", ClampMin = "4", ClampMax = "15", EditCondition = "bPlaying == false", EditConditionHides))
 	uint8 _mazeSize = 3;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+    class USceneComponent* _goalLoc;
+
+protected:
+	UFUNCTION(BlueprintCallable, CallInEditor, Category="MazeProp")
+	void NewMaze();
+
+
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	void RerunConstructionScripts() override;
+	void PostActorCreated() override;
+	void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-public:
-	void RerunConstructionScripts() override;
-	void PostActorCreated() override;
-	void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent) override;
 
 private:
 	void makeMap();

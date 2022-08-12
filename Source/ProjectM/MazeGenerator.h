@@ -111,6 +111,8 @@ public:
 	void init(uint8 InMapSize);
 	void generate();
 	void build();
+    Position getGoalPos();
+
     std::map<Position, MazeNode*> getMaze();
 
 private:

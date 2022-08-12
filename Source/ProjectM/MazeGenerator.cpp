@@ -22,6 +22,21 @@ public:
 
         _dfs.push_back({ 1, 1 });
 
+        _startPos = Position(0, 0);
+        _endPos = Position(0, 0);
+
+
+    }
+
+    void generate()
+    {
+        PrintLine();
+
+        std::random_device rd;
+        auto rng = std::default_random_engine{ rd() };
+
+        _mapNode.clear();
+
         for (uint8 c = 0; c < _mapSize; c++)
         {
             for (uint8 r = 0; r < _mapSize; r++)
@@ -35,18 +50,18 @@ public:
                 _mapNode[pos] = mn;
             }
         }
-    }
 
-    void generate()
-    {
-        std::random_device rd;
-        auto rng = std::default_random_engine{ rd() };
-
-        PrintLine();
-
+        uint16 goalDepth = 0;
 
         while (!_dfs.empty())
         {
+            if (goalDepth < _dfs.size())
+            {
+                goalDepth = _dfs.size();
+                _endPos = _dfs.back();
+            }
+
+
             if (_mapNode[_dfs.back()]->nextWay.empty())
             {
                 _dfs.pop_back();
@@ -90,13 +105,20 @@ public:
         return _mapNode;
     }
 
+    Position getGoalPos()
+    {
+        return _endPos;
+    }
+
 private:
     uint8 _mapSize;
     std::vector<Position> _dfs;
     std::map<Position, MazeNode*> _mapNode;
+    Position _startPos;
+    Position _endPos;
 };
 
-MazeGenerator::MazeGenerator() : pimpl_(new MazeImpl{}) {};
+MazeGenerator::MazeGenerator() : pimpl_(new MazeImpl) {};
 MazeGenerator::~MazeGenerator() = default;
 
 void MazeGenerator::init(uint8 InMapSize)
@@ -114,7 +136,13 @@ void MazeGenerator::build()
     pimpl_->build();
 }
 
+Position MazeGenerator::getGoalPos()
+{
+    return pimpl_->getGoalPos();
+}
+
 std::map<Position, MazeNode*> MazeGenerator::getMaze()
 {
     return pimpl_->getMaze();
 }
+
