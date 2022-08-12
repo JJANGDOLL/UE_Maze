@@ -29,10 +29,10 @@ AFlashLightBase::AFlashLightBase()
     _flashLight->SetupAttachment(_mesh);
     _flashLight->SetRelativeLocation(FVector(0.f, -11.f, 125.f));
     _flashLight->SetRelativeRotation(FQuat(0.f, 0.f, -90.f, 0.f));
-    _flashLight->Intensity = 10000.0f;
-    _flashLight->InnerConeAngle = 15.0f;
-    _flashLight->OuterConeAngle = 22.0f;
-    _flashLight->AttenuationRadius = 3500.f;
+    _flashLight->Intensity = 15000.f;
+    _flashLight->InnerConeAngle = 18.0f;
+    _flashLight->OuterConeAngle = 25.0f;
+    _flashLight->AttenuationRadius = 5000.f;
 }
 
 // Called when the game starts or when spawned

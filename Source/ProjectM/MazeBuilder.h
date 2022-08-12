@@ -20,4 +20,5 @@ private:
     TArray<class UChildActorComponent*> _mazeChildComponents;
     FVector _startLoc;
     FVector _goalLoc;
+    class UMaterialInstanceConstant* _material;
 };
