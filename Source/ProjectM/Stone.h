@@ -4,25 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "FlashLightBase.generated.h"
+#include "Item.h"
+#include "Stone.generated.h"
 
 UCLASS()
-class PROJECTM_API AFlashLightBase : public AActor
+class PROJECTM_API AStone : public AActor, public IItem
 {
 	GENERATED_BODY()
-
+	
 public:	
 	// Sets default values for this actor's properties
-	AFlashLightBase();
-
-	void PressSwitch();
-
-private:
-// 	UPROPERTY(VisibleAnywhere, meta=(AllowPrivateAccess="true"))
-// 	class UStaticMeshComponent* _mesh;
-
-//     UPROPERTY(VisibleAnywhere, Category = Items, meta = (AllowPrivateAccess = "true"))
-    class USpotLightComponent* _flashLight;
+	AStone();
 
 protected:
 	// Called when the game starts or when spawned
@@ -32,6 +24,4 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-private:
-	bool bOn = false;
 };

@@ -35,7 +35,7 @@ MazeBuilder::MazeBuilder()
     _mazeMeshNames.Add(Direction::WEST + Direction::SOUTH + Direction::NORTH, "BP_Maze_WSN");
 
     _material;
-    Helpers::GetAsset<UMaterialInstanceConstant>(&_material, "MaterialInstanceConstant'/Game/EF_Barbra/Common/Materials/Concrete/WM_ConcreteBare_b_mat_Inst.WM_ConcreteBare_b_mat_Inst'");
+    Helpers::GetAsset<UMaterialInstanceConstant>(&_material, "MaterialInstanceConstant'/Game/Materials/MI_Room.MI_Room'");
 
 
     FString pathName = "Blueprint'/Game/Meshes/";

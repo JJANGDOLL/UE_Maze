@@ -14,25 +14,31 @@ AFlashLightBase::AFlashLightBase()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-    USceneComponent* root = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
-    SetRootComponent(root);
+//     USceneComponent* root = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
+//     SetRootComponent(root);
 
 	UStaticMesh* flashMesh;
 	Helpers::GetAsset<UStaticMesh>(&flashMesh, "StaticMesh'/Game/Flashlight/tourch_light_Cylinder.tourch_light_Cylinder'");
 
-	_mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MainMesh"));
-    _mesh->SetRelativeScale3D(FVector(0.05f, 0.05f, 0.05f));
-	_mesh->SetStaticMesh(flashMesh);
-	_mesh->SetupAttachment(root);
+    UStaticMeshComponent* mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MainMesh"));
+    mesh->SetRelativeScale3D(FVector(0.05f, 0.05f, 0.05f));
+	mesh->SetStaticMesh(flashMesh);
+	mesh->SetupAttachment(GetRootComponent());
 
     _flashLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("FlashLight"));
-    _flashLight->SetupAttachment(_mesh);
+    _flashLight->SetupAttachment(mesh);
     _flashLight->SetRelativeLocation(FVector(0.f, -11.f, 125.f));
     _flashLight->SetRelativeRotation(FQuat(0.f, 0.f, -90.f, 0.f));
     _flashLight->Intensity = 15000.f;
     _flashLight->InnerConeAngle = 18.0f;
     _flashLight->OuterConeAngle = 25.0f;
     _flashLight->AttenuationRadius = 5000.f;
+}
+
+void AFlashLightBase::PressSwitch()
+{
+    bOn = !bOn;
+    _flashLight->ToggleVisibility(bOn);
 }
 
 // Called when the game starts or when spawned
