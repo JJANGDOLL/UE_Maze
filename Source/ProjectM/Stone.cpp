@@ -2,10 +2,11 @@
 
 
 #include "Stone.h"
-#include "Utilities/Helpers.h"
 #include <Components/StaticMeshComponent.h>
 #include <Engine/StaticMesh.h>
 #include <Components/SpotLightComponent.h>
+
+#include "Global.h"
 
 // Sets default values
 AStone::AStone()
@@ -21,7 +22,7 @@ AStone::AStone()
 
 	UStaticMeshComponent* _mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("BaseMesh"));
 	_mesh->SetStaticMesh(mesh);
-	_mesh->SetSimulatePhysics(true);
+// 	_mesh->SetSimulatePhysics(true);
 	_mesh->SetRelativeScale3D(FVector(0.1f, 0.1f, 0.1f));
 	_mesh->SetupAttachment(GetRootComponent());
 }
@@ -38,5 +39,10 @@ void AStone::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AStone::Use()
+{
+	PrintLine();
 }
 

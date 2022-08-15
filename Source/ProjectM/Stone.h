@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Item.h"
+#include "Interfaces/Item.h"
 #include "Stone.generated.h"
 
 UCLASS()
@@ -23,5 +23,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+public:
+	void Use() override;
 
 };

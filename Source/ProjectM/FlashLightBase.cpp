@@ -21,14 +21,16 @@ AFlashLightBase::AFlashLightBase()
 	Helpers::GetAsset<UStaticMesh>(&flashMesh, "StaticMesh'/Game/Flashlight/tourch_light_Cylinder.tourch_light_Cylinder'");
 
     UStaticMeshComponent* mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MainMesh"));
+//     mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MainMesh"));
+	mesh->SetupAttachment(GetRootComponent());
     mesh->SetRelativeScale3D(FVector(0.05f, 0.05f, 0.05f));
 	mesh->SetStaticMesh(flashMesh);
-	mesh->SetupAttachment(GetRootComponent());
+    mesh->SetRelativeRotation(FQuat(0.f, 0.f, 0.f, 0.f));
 
     _flashLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("FlashLight"));
     _flashLight->SetupAttachment(mesh);
     _flashLight->SetRelativeLocation(FVector(0.f, -11.f, 125.f));
-    _flashLight->SetRelativeRotation(FQuat(0.f, 0.f, -90.f, 0.f));
+    _flashLight->AddRelativeRotation(FRotator(0.f ,-90.f, 0.f));
     _flashLight->Intensity = 15000.f;
     _flashLight->InnerConeAngle = 18.0f;
     _flashLight->OuterConeAngle = 25.0f;

@@ -12,6 +12,8 @@
 #include <Components/ChildActorComponent.h>
 #include <Curves/CurveFloat.h>
 #include "FlashLightBase.h"
+#include "Interfaces/Item.h"
+#include "Stone.h"
 
 // Sets default values
 AMainCharcater::AMainCharcater()
@@ -33,6 +35,8 @@ AMainCharcater::AMainCharcater()
     TSubclassOf<AFlashLightBase> flashLight;
     Helpers::GetClass<AFlashLightBase>(&flashLight, TEXT("Blueprint'/Game/Actors/BP_FlashLight.BP_FlashLight_C'"));
     _flashLight->SetChildActorClass(flashLight);
+    _flashLight->SetRelativeLocation(FVector(0.f, 0.f, -70.f));
+    _flashLight->SetRelativeRotation(FQuat(0.f, -90.f, 0.f, 0.f));
 
     GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 
@@ -41,6 +45,15 @@ AMainCharcater::AMainCharcater()
     SmoothCrouchTimelineFinish.BindUFunction(this, FName("SmoothCrouchOnFinish"));
 
     Helpers::GetAsset<UCurveFloat>(&SmoothCrouchingCurveFloat, TEXT("CurveFloat'/Game/TImeline/CourchCurve.CourchCurve'"));
+
+    _item = CreateDefaultSubobject<UChildActorComponent>(TEXT("Item"));
+    _item->SetupAttachment(_mainCamera);
+    _item->AddRelativeLocation(FVector(30.f, 0.f, 0.f));
+
+    // =============================== TEST =============================== 
+    
+    Helpers::GetClass<AStone>(&_stone, TEXT("Blueprint'/Game/Items/BP_Stone.BP_Stone_C'"));
+    _item->SetChildActorClass(_stone);
 }
 
 
@@ -146,7 +159,17 @@ void AMainCharcater::Stand()
 
 void AMainCharcater::Use()
 {
+    PrintLine();
 
+    Logger::Log(_item->GetChildActorClass());
+
+    if (!!_item->GetChildActorClass())
+    {
+        _item->CreateChildActor();
+        _equipedItem = Cast<AStone>(_item->GetChildActor());
+        _equipedItem->Use();
+        _item->SetChildActorClass(nullptr);
+    }
 }
 
 void AMainCharcater::SmoothCrouchIterRet(float value)

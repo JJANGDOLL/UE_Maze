@@ -88,4 +88,9 @@ private:
 
 private:
 	class IItem* _equipedItem;
+
+	class UChildActorComponent* _item;
+
+    TSubclassOf<class AStone> _stone;
+
 };

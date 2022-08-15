@@ -25,7 +25,7 @@ private:
 	uint8 _mazeSize = 3;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-    class USceneComponent* _goalLoc;
+    class UChildActorComponent* _goalLoc;
 
 protected:
 	UFUNCTION(BlueprintCallable, CallInEditor, Category="MazeProp")

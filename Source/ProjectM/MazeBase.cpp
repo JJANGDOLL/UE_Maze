@@ -5,17 +5,17 @@
 #include "Global.h"
 #include <Engine/Blueprint.h>
 #include <Components/StaticMeshComponent.h>
+#include <Components/ChildActorComponent.h>
 
 AMazeBase::AMazeBase()
     : _mazeBuilder(new MazeBuilder), _mazeGenerator(new MazeGenerator)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-    USceneComponent* root = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
-    SetRootComponent(root);
+//     USceneComponent* root = CreateDefaultSubobject<USceneComponent>(TEXT("SceneRoot"));
+//     SetRootComponent(root);
 
-
-    _goalLoc = CreateDefaultSubobject<USceneComponent>(TEXT("GoalLoc"));
+    _goalLoc = CreateDefaultSubobject<UChildActorComponent>(TEXT("GoalLoc"));
     _goalLoc->SetupAttachment(GetRootComponent());
 }
 
